@@ -21,3 +21,10 @@ get '/:word' do
 end
 
 
+
+
+# seeded ur database 'name'
+# before save callback that will sort your name
+# update old records
+
+# Word.find_each(&:save)

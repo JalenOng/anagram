@@ -1,9 +1,10 @@
 class Word < ActiveRecord::Base
   # Remember to create a migration!
+  before_save :generate_sorted_word
 
   def self.anagrams_for(input)
 
-    my_word = Word.where(canonical: canonical(input))
+    my_word = Word.where(canonical: sortcanonical(input))
     # anagrams = [ ]
     # Word.all.select do |x|
     #   anagrams.insert(word) if is_anagram?(word, x) }
@@ -13,12 +14,16 @@ class Word < ActiveRecord::Base
     #  end
   end
 
-  def self.canonical(input)
+  def self.sortcanonical(input)
     input.downcase.split("").sort.join
   end
 
   def self.is_anagram?(input1, input2)
     canonical(input1) == canonical(input2)
+  end
+
+  def generate_sorted_word
+    self.canonical = name.downcase.split("").sort.join
   end
 
 
